@@ -39,7 +39,6 @@ router.post('/register', async (req, res) => {
         const user = await User.findOne({username})
         if(user) 
         return res.status(400).json({success: false, message: "Username already taken"});
-        // All Good
 
         const hashedPassword = await argon2.hash(password);
         const newUser = new User({username, password: hashedPassword});
@@ -78,7 +77,6 @@ router.post('/login', async (req, res) => {
         if(!passwordVaild)
             return res.status(400).json({success: false, message: 'Incorrect username or password'})
         
-        // All good
         const accessToken = jwt.sign({userId: user._id}, process.env.ACCESS_TOKEN_SECRET)
         res.json({success: true, message: 'User logged in  successfully', accessToken})
     } catch (error) {
